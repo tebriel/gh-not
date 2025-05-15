@@ -4,6 +4,7 @@ import (
 	"io"
 
 	"github.com/nobe4/gh-not/internal/actions/assign"
+	"github.com/nobe4/gh-not/internal/actions/custom"
 	"github.com/nobe4/gh-not/internal/actions/debug"
 	"github.com/nobe4/gh-not/internal/actions/done"
 	"github.com/nobe4/gh-not/internal/actions/hide"
@@ -13,13 +14,14 @@ import (
 	"github.com/nobe4/gh-not/internal/actions/print"
 	"github.com/nobe4/gh-not/internal/actions/read"
 	"github.com/nobe4/gh-not/internal/actions/tag"
+	ghnconfig "github.com/nobe4/gh-not/internal/config"
 	"github.com/nobe4/gh-not/internal/gh"
 	"github.com/nobe4/gh-not/internal/notifications"
 )
 
 type Map map[string]Runner
 
-func GetMap(client *gh.Client) Map {
+func GetMap(client *gh.Client, config *ghnconfig.Data) Map {
 	return map[string]Runner{
 		"pass":   &pass.Runner{},
 		"debug":  &debug.Runner{},
@@ -31,6 +33,7 @@ func GetMap(client *gh.Client) Map {
 		"assign": &assign.Runner{Client: client},
 		"json":   &json.Runner{},
 		"tag":    &tag.Runner{},
+		"custom": &custom.Runner{Client: client, Config: config},
 	}
 }
 
