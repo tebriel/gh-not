@@ -39,7 +39,7 @@ func New(c *config.Data) *Manager {
 
 func (m *Manager) SetCaller(caller api.Requestor) {
 	m.client = gh.NewClient(caller, m.Cache, m.config.Endpoint)
-	m.Actions = actions.GetMap(m.client)
+	m.Actions = actions.GetMap(m.client, m.config)
 }
 
 func (m *Manager) Load() error {
